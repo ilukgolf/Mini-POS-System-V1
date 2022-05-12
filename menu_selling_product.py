@@ -258,7 +258,7 @@ def selling_product(display, user_data):
         total_price = 0
         if len(config.cart) > 0:
             for idx, (id, name, amount, price) in enumerate(config.cart):
-                total_price += price * amount
+                total_price += float(price) * float(amount)
         summary_price_var.set('%.2f' %total_price)
 
         price_left_frame = tk.Frame(summary_price_frame, background=config.color_default)
@@ -301,7 +301,7 @@ def selling_product(display, user_data):
         cancel_button.grid(row=2, column=0, columnspan=1, padx=5, pady=5, ipadx=8, ipady=1, sticky=tk.NSEW)
 
         confirm_button = tk.Button(
-            price_right_frame, text="ยืนยัน",
+            price_right_frame, text="บันทึก",
             cursor="hand2", anchor=tk.CENTER,
             activebackground=config.color_green, activeforeground=config.color_white,
             font=tkfont.Font(family='FC Lamoon', size=16, weight='bold'),
@@ -321,6 +321,8 @@ def selling_product(display, user_data):
         total_price = 0
         product_selling_list_tree.delete(*product_selling_list_tree.get_children())
         summary_price_var.set('%.2f' %total_price)
+        cash_received_var.set('')
+        product_search_entry.focus_force()
 
     def confirm_order():
         if len(config.cart) == 0 or total_price == 0:
@@ -333,10 +335,43 @@ def selling_product(display, user_data):
             elif float(cash_received_var.get()) < total_price:
                 alert_message.cash_received_error(3)
             else:
-                confirm_save_selling()
+                question = alert_message.save_selling(float(cash_received_var.get()) - total_price)
+                if question == True:
+                    confirm_save_selling()
 
     def confirm_save_selling():
-        pass
+        import connect_database
+        import datetime
+        import sqlite3
+        day = datetime.datetime.now().strftime("%d")
+        month = datetime.datetime.now().strftime("%m")
+        year = datetime.datetime.now().strftime("%y")
+        hour = datetime.datetime.now().strftime("%H")
+        minute = datetime.datetime.now().strftime("%M")
+        second = datetime.datetime.now().strftime("%S")
+        sell_id = "1" + year + month + day + hour + minute + second
+
+        global conn, cursor
+        conn = sqlite3.connect('assets\\backend\\database\\minipos.db')
+        cursor = conn.cursor()
+
+        for idx, (id, name, amount, price) in enumerate(config.cart):
+            sql = '''INSERT INTO selling_history
+            (selling_id, selling_product_id, selling_product_amount, selling_product_price)
+            VALUES (?, ?, ?, ?)'''
+            cursor.execute(sql, (sell_id, config.cart[idx][0], config.cart[idx][3], config.cart[idx][2]))
+            conn.commit()
+
+        sell_date = day + "/" + month + "/" + datetime.datetime.now().strftime("%Y") + " " + hour + ":" + minute + ":" + second
+
+        sql2 = '''INSERT INTO selling_payment
+        (selling_id, selling_date_create, selling_user_id, selling_total_price, selling_cash_received, selling_cash_change)
+        VALUES (?, ?, ?, ?, ?, ?)'''
+        cursor.execute(sql2, (sell_id, sell_date, user_data[0], float(total_price), float(cash_received_var.get()), float(cash_received_var.get()) - float(total_price)))
+        conn.commit()
+        conn.close()
+        cancel_order()
+
 
     # When the user clicks the "เพิ่มลงตะกร้า" button, the product is added to the cart.
     # Or when the user selects a product from the list, the product is added to the cart.
