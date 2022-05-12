@@ -290,8 +290,9 @@ def main_menu_frame(root, user_data):
             order_product_frame.bind("<Button-1>", lambda event: order_product_frame_click())
             order_product_image.bind("<Button-1>", lambda event: order_product_frame_click())
             order_product_label.bind("<Button-1>", lambda event: order_product_frame_click())
-
-            search_product_frame_click()   # default selected menu
+            user_management_frame_click()   # default selected menu
+        elif user_data[0][4] == '2':
+            selling_product_frame_click()
 
     def logout_button_click():
         if alert_message.ask_logout():
