@@ -3,9 +3,21 @@ import tkinter.ttk as ttk
 import tkinter.font as tkfont
 import config
 import alert_message
+from tkcalendar import DateEntry
 
 def user_management(display, user_data):
     user_management_frame = tk.Frame(display, bg=config.color_default)
+
+    search_key = tk.StringVar()
+    user_rank = tk.StringVar()
+    user_identification_id = tk.StringVar()
+    user_name_prefix = tk.StringVar()
+    user_name_th = tk.StringVar()
+    user_lastname_th = tk.StringVar()
+    user_name_en = tk.StringVar()
+    user_lastname_en = tk.StringVar()
+    user_date_of_birthday = tk.StringVar()
+    user_phone_number = tk.StringVar()
 
     def create_frame():
         global main_frame
@@ -132,6 +144,68 @@ def user_management(display, user_data):
     def add_new_user_account():
         add_new_user_account_frame = tk.Frame(main_frame, bg=config.color_default)
         add_new_user_account_frame.place(x=5, y=5, width=1037, height=610)
+        style_label = ttk.Style()
+        style_label.configure("A.Label", font=("FC Lamoon Bold", 18), anchor="e")
+
+        label_menu = tk.Label(add_new_user_account_frame, text="เพิ่มบัญชีผู้ใช้", font=tkfont.Font(family='FC Lamoon', size=30, weight='bold'))
+        label_menu.place(x=0, y=50, width=1020)
+
+        ttk.Label(add_new_user_account_frame, text="ตำแหน่ง :", style="A.Label").place(x=79, y=150, width=200)
+        ttk.Label(add_new_user_account_frame, text="เลขประจำตัวบัตรประชาชน :", style="A.Label").place(x=0, y=200, width=280)
+        ttk.Label(add_new_user_account_frame, text="คำนำหน้าชื่อ :", style="A.Label").place(x=79, y=250, width=200)
+        ttk.Label(add_new_user_account_frame, text="ชื่อจริง (ไทย) :", style="A.Label").place(x=79, y=300, width=200)
+        ttk.Label(add_new_user_account_frame, text="นามสกุล (ไทย) :", style="A.Label").place(x=79, y=350, width=200)
+        ttk.Label(add_new_user_account_frame, text="ที่อยู่อาศัย :", style="A.Label").place(x=79, y=400, width=200)
+        ttk.Label(add_new_user_account_frame, text="ชื่อจริง (อังกฤษ) :", style="A.Label").place(x=500, y=300, width=200)
+        ttk.Label(add_new_user_account_frame, text="นามสกุล (อังกฤษ) :", style="A.Label").place(x=500, y=350, width=200)
+        ttk.Label(add_new_user_account_frame, text="วัน เดือน ปีเกิด :", style="A.Label").place(x=500, y=400, width=200)
+        ttk.Label(add_new_user_account_frame, text="เบอร์โทรศัพท์ :", style="A.Label").place(x=500, y=450, width=200)
+        
+        def only_numbers(char):
+            return char.isdigit()
+        validation = add_new_user_account_frame.register(only_numbers)
+
+        rank = ["ผู้ดูแลระบบ", "พนักงาน"]
+        position = ttk.Combobox(add_new_user_account_frame , font=tkfont.Font(family='FC Lamoon', size=18), textvariable=user_rank, state="readonly", values=rank)
+        user_rank.set(rank[0])
+        position.place(x=290, y=150, width=250, height=30)
+
+        identification_id = tk.Entry(add_new_user_account_frame, font=tkfont.Font(family='FC Lamoon', size=18), textvariable=user_identification_id,validate="key", validatecommand=(validation, '%S'))#input digit only
+        identification_id.place(x=290, y=200, width=250, height=30)
+
+        prefix = ["นาย", "นาง", "นางสาว"]
+        name_prefix = ttk.Combobox(add_new_user_account_frame, font=tkfont.Font(family='FC Lamoon', size=18), textvariable=user_name_prefix, state="readonly", values=prefix)
+        name_prefix.set(prefix[0])
+        name_prefix.place(x=290, y=250, width=250, height=30)
+
+        name_TH = tk.Entry(add_new_user_account_frame, font=tkfont.Font(family='FC Lamoon', size=18), textvariable=user_name_th)
+        name_TH.place(x=290, y=300, width=250, height=30)
+
+        lastname_TH = tk.Entry(add_new_user_account_frame, font=tkfont.Font(family='FC Lamoon', size=18), textvariable=user_lastname_th)
+        lastname_TH.place(x=290, y=350, width=250, height=30)
+
+        user_residence = tk.Text(add_new_user_account_frame, font=tkfont.Font(family='FC Lamoon', size=18))
+        user_residence.place(x=290, y=400, width=250, height=90)
+
+        name_EN = tk.Entry(add_new_user_account_frame, font=tkfont.Font(family='FC Lamoon', size=18), textvariable=user_name_en)
+        name_EN.place(x=710, y=300, width=250, height=30)
+
+        lastname_EN = tk.Entry(add_new_user_account_frame, font=tkfont.Font(family='FC Lamoon', size=18), textvariable=user_lastname_en)
+        lastname_EN.place(x=710, y=350, width=250, height=30)
+
+        birthday = DateEntry(add_new_user_account_frame, date_pattern="dd/mm/yyyy", font=("FC Lamoon", 16), textvariable=user_date_of_birthday, state="readonly")
+        birthday.place(x=710, y=400, width=250, height=30)
+
+        phone = tk.Entry(add_new_user_account_frame, font=tkfont.Font(family='FC Lamoon', size=18), textvariable=user_phone_number, validate="key", validatecommand=(validation, '%S'))
+        phone.place(x=710, y=450, width=250, height=30)
+
+
+
+        cancel_botton = tk.Button(add_new_user_account_frame, bg="#C40000", text="ยกเลิก", font=tkfont.Font(family='FC Lamoon', size=18, weight='bold'), fg="white")
+        cancel_botton.place(x=725, y=520, width=110, height=50)
+
+        save_botton = tk.Button(add_new_user_account_frame, bg="#00C400", text="บันทึก", font=tkfont.Font(family='FC Lamoon', size=18, weight='bold'), fg="white")
+        save_botton.place(x=860, y=520, width=110, height=50)
 
 
     create_frame()
