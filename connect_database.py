@@ -13,7 +13,7 @@ def insert_data(sql):
     global conn, cursor
     conn = sqlite3.connect('assets\\backend\\database\\minipos.db')
     cursor = conn.cursor()
-    cursor.execute(sql, )
+    cursor.execute(sql)
     conn.commit()
     conn.close()
 
