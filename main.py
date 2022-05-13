@@ -30,6 +30,10 @@ def App():
     authentication()        # Call function authentication
     root.bind('<F11>', lambda event: alert_message.fullscreen_error())  # Fullscreen
     root.bind('<F1>', lambda event: alert_message.Hmmm())  # Help
+
+    test_font = ("FC Lamoon", 18)
+    root.option_add('*TCombobox*Listbox.font', test_font)
+
     root.mainloop()         # Start main loop
 
 # Call main function
