@@ -158,11 +158,11 @@ def main_menu_frame(root, user_data):
             frame = menu_user_management.user_management(main_frame, user_data)
             frame.place(x=225, y=90, width=1047, height=620)
 
-        def seller_management_frame_click():
-            switch_menu_selection(seller_management_frame)
-            import menu_seller_management
-            frame = menu_seller_management.seller_management(main_frame, user_data)
-            frame.place(x=225, y=90, width=1047, height=620)
+        # def seller_management_frame_click():
+        #     switch_menu_selection(seller_management_frame)
+        #     import menu_seller_management
+        #     frame = menu_seller_management.seller_management(main_frame, user_data)
+        #     frame.place(x=225, y=90, width=1047, height=620)
 
         def warehouse_management_frame_click():
             switch_menu_selection(warehouse_management_frame)
@@ -170,17 +170,17 @@ def main_menu_frame(root, user_data):
             frame = menu_warehouse_management.warehouse_management(main_frame, user_data)
             frame.place(x=225, y=90, width=1047, height=620)
 
-        def summary_report_frame_click():
-            switch_menu_selection(summary_report_frame)
-            import menu_summary_report
-            frame = menu_summary_report.summary_report(main_frame, user_data)
-            frame.place(x=225, y=90, width=1047, height=620)
+        # def summary_report_frame_click():
+        #     switch_menu_selection(summary_report_frame)
+        #     import menu_summary_report
+        #     frame = menu_summary_report.summary_report(main_frame, user_data)
+        #     frame.place(x=225, y=90, width=1047, height=620)
 
-        def order_product_frame_click():
-            switch_menu_selection(order_product_frame)
-            import menu_order_product
-            frame = menu_order_product.order_product(main_frame, user_data)
-            frame.place(x=225, y=90, width=1047, height=620)
+        # def order_product_frame_click():
+        #     switch_menu_selection(order_product_frame)
+        #     import menu_order_product
+        #     frame = menu_order_product.order_product(main_frame, user_data)
+        #     frame.place(x=225, y=90, width=1047, height=620)
 
         left_frame_inside = tk.Frame(left_frame, background=config.window_background_color)
         left_frame_inside.pack(expand=True, fill=tk.Y)
@@ -231,66 +231,66 @@ def main_menu_frame(root, user_data):
             user_management_image.bind("<Button-1>", lambda event: user_management_frame_click())
             user_management_label.bind("<Button-1>", lambda event: user_management_frame_click())
 
-            seller_management_frame = tk.Frame(left_frame_inside, background=config.window_background_color2, cursor="hand2")
-            seller_management_frame.pack(fill=tk.Y, padx=0, pady=10, ipadx=10)
-            seller_management_image = tk.Label(
-                seller_management_frame, image=seller_management_icon,
-                background=config.window_background_color2, width=70, height=70)
-            seller_management_image.grid(row=3, column=0, columnspan=1, rowspan=1, padx=2, pady=3)
-            seller_management_label = tk.Label(
-                seller_management_frame, text="จัดการบัญชี\nตัวแทนจำหน่าย",
-                font=tkfont.Font(family='FC Lamoon', size=18, weight='bold'), width=12,
-                background=config.window_background_color2, foreground=config.color_black, anchor=tk.CENTER)
-            seller_management_label.grid(row=3, column=1, columnspan=1, rowspan=1, padx=2, pady=3, sticky=tk.E)
-            seller_management_frame.bind("<Button-1>", lambda event: seller_management_frame_click())
-            seller_management_image.bind("<Button-1>", lambda event: seller_management_frame_click())
-            seller_management_label.bind("<Button-1>", lambda event: seller_management_frame_click())
+            # seller_management_frame = tk.Frame(left_frame_inside, background=config.window_background_color2, cursor="hand2")
+            # seller_management_frame.pack(fill=tk.Y, padx=0, pady=10, ipadx=10)
+            # seller_management_image = tk.Label(
+            #     seller_management_frame, image=seller_management_icon,
+            #     background=config.window_background_color2, width=70, height=70)
+            # seller_management_image.grid(row=3, column=0, columnspan=1, rowspan=1, padx=2, pady=3)
+            # seller_management_label = tk.Label(
+            #     seller_management_frame, text="จัดการบัญชี\nตัวแทนจำหน่าย",
+            #     font=tkfont.Font(family='FC Lamoon', size=18, weight='bold'), width=12,
+            #     background=config.window_background_color2, foreground=config.color_black, anchor=tk.CENTER)
+            # seller_management_label.grid(row=3, column=1, columnspan=1, rowspan=1, padx=2, pady=3, sticky=tk.E)
+            # seller_management_frame.bind("<Button-1>", lambda event: seller_management_frame_click())
+            # seller_management_image.bind("<Button-1>", lambda event: seller_management_frame_click())
+            # seller_management_label.bind("<Button-1>", lambda event: seller_management_frame_click())
 
             warehouse_management_frame = tk.Frame(left_frame_inside, background=config.window_background_color2, cursor="hand2")
-            warehouse_management_frame.pack(fill=tk.Y, padx=0, pady=0, ipadx=10)
+            warehouse_management_frame.pack(fill=tk.Y, padx=0, pady=10, ipadx=10)
             warehouse_management_image = tk.Label(
                 warehouse_management_frame, image=warehouse_management_icon,
                 background=config.window_background_color2, width=70, height=70)
-            warehouse_management_image.grid(row=4, column=0, columnspan=1, rowspan=1, padx=2, pady=3)
+            warehouse_management_image.grid(row=3, column=0, columnspan=1, rowspan=1, padx=2, pady=3)
             warehouse_management_label = tk.Label(
                 warehouse_management_frame, text="จัดการบัญชี\nทะเบียนสินค้า",
                 font=tkfont.Font(family='FC Lamoon', size=18, weight='bold'), width=12,
                 background=config.window_background_color2, foreground=config.color_black, anchor=tk.CENTER)
-            warehouse_management_label.grid(row=4, column=1, columnspan=1, rowspan=1, padx=2, pady=3, sticky=tk.E)
+            warehouse_management_label.grid(row=3, column=1, columnspan=1, rowspan=1, padx=2, pady=3, sticky=tk.E)
             warehouse_management_frame.bind("<Button-1>", lambda event: warehouse_management_frame_click())
             warehouse_management_image.bind("<Button-1>", lambda event: warehouse_management_frame_click())
             warehouse_management_label.bind("<Button-1>", lambda event: warehouse_management_frame_click())
 
-            summary_report_frame = tk.Frame(left_frame_inside, background=config.window_background_color2, cursor="hand2")
-            summary_report_frame.pack(fill=tk.Y, padx=0, pady=10, ipadx=10)
-            summary_report_image = tk.Label(
-                summary_report_frame, image=summary_report_icon,
-                background=config.window_background_color2, width=70, height=70)
-            summary_report_image.grid(row=5, column=0, columnspan=1, rowspan=1, padx=2, pady=3)
-            summary_report_label = tk.Label(
-                summary_report_frame, text="จัดการรายงาน\nสรุปยอดขาย",
-                font=tkfont.Font(family='FC Lamoon', size=18, weight='bold'), width=12,
-                background=config.window_background_color2, foreground=config.color_black, anchor=tk.CENTER)
-            summary_report_label.grid(row=5, column=1, columnspan=1, rowspan=1, padx=2, pady=3, sticky=tk.E)
-            summary_report_frame.bind("<Button-1>", lambda event: summary_report_frame_click())
-            summary_report_image.bind("<Button-1>", lambda event: summary_report_frame_click())
-            summary_report_label.bind("<Button-1>", lambda event: summary_report_frame_click())
+            # summary_report_frame = tk.Frame(left_frame_inside, background=config.window_background_color2, cursor="hand2")
+            # summary_report_frame.pack(fill=tk.Y, padx=0, pady=10, ipadx=10)
+            # summary_report_image = tk.Label(
+            #     summary_report_frame, image=summary_report_icon,
+            #     background=config.window_background_color2, width=70, height=70)
+            # summary_report_image.grid(row=5, column=0, columnspan=1, rowspan=1, padx=2, pady=3)
+            # summary_report_label = tk.Label(
+            #     summary_report_frame, text="จัดการรายงาน\nสรุปยอดขาย",
+            #     font=tkfont.Font(family='FC Lamoon', size=18, weight='bold'), width=12,
+            #     background=config.window_background_color2, foreground=config.color_black, anchor=tk.CENTER)
+            # summary_report_label.grid(row=5, column=1, columnspan=1, rowspan=1, padx=2, pady=3, sticky=tk.E)
+            # summary_report_frame.bind("<Button-1>", lambda event: summary_report_frame_click())
+            # summary_report_image.bind("<Button-1>", lambda event: summary_report_frame_click())
+            # summary_report_label.bind("<Button-1>", lambda event: summary_report_frame_click())
 
-            order_product_frame = tk.Frame(left_frame_inside, background=config.window_background_color2, cursor="hand2")
-            order_product_frame.pack(fill=tk.Y, padx=0, pady=0, ipadx=10)
-            order_product_image = tk.Label(
-                order_product_frame, image=order_product_icon,
-                background=config.window_background_color2, width=70, height=70)
-            order_product_image.grid(row=6, column=0, columnspan=1, rowspan=1, padx=2, pady=3)
-            order_product_label = tk.Label(
-                order_product_frame, text="จัดการสินค้า\nรายการคำสั่งซื้อ",
-                font=tkfont.Font(family='FC Lamoon', size=18, weight='bold'), width=12,
-                background=config.window_background_color2, foreground=config.color_black, anchor=tk.CENTER)
-            order_product_label.grid(row=6, column=1, columnspan=1, rowspan=1, padx=2, pady=3, sticky=tk.E)
-            order_product_frame.bind("<Button-1>", lambda event: order_product_frame_click())
-            order_product_image.bind("<Button-1>", lambda event: order_product_frame_click())
-            order_product_label.bind("<Button-1>", lambda event: order_product_frame_click())
-            user_management_frame_click()   # default selected menu
+            # order_product_frame = tk.Frame(left_frame_inside, background=config.window_background_color2, cursor="hand2")
+            # order_product_frame.pack(fill=tk.Y, padx=0, pady=0, ipadx=10)
+            # order_product_image = tk.Label(
+            #     order_product_frame, image=order_product_icon,
+            #     background=config.window_background_color2, width=70, height=70)
+            # order_product_image.grid(row=6, column=0, columnspan=1, rowspan=1, padx=2, pady=3)
+            # order_product_label = tk.Label(
+            #     order_product_frame, text="จัดการสินค้า\nรายการคำสั่งซื้อ",
+            #     font=tkfont.Font(family='FC Lamoon', size=18, weight='bold'), width=12,
+            #     background=config.window_background_color2, foreground=config.color_black, anchor=tk.CENTER)
+            # order_product_label.grid(row=6, column=1, columnspan=1, rowspan=1, padx=2, pady=3, sticky=tk.E)
+            # order_product_frame.bind("<Button-1>", lambda event: order_product_frame_click())
+            # order_product_image.bind("<Button-1>", lambda event: order_product_frame_click())
+            # order_product_label.bind("<Button-1>", lambda event: order_product_frame_click())
+            selling_product_frame_click()   # default selected menu
         elif user_data[0][4] == '2':
             selling_product_frame_click()
 
