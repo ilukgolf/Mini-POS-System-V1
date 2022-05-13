@@ -8,7 +8,6 @@ from tkcalendar import DateEntry
 def user_management(display, user_data):
     user_management_frame = tk.Frame(display, bg=config.color_default)
 
-    search_key = tk.StringVar()
     user_rank = tk.StringVar()
     user_identification_id = tk.StringVar()
     user_name_prefix = tk.StringVar()
@@ -84,6 +83,7 @@ def user_management(display, user_data):
 
         import connect_database
         sql = "SELECT * FROM user_accounts"
+        global user_account_list
         user_account_list = connect_database.database_execute(sql)
 
         for i, user_record in enumerate(user_account_list):
@@ -92,7 +92,7 @@ def user_management(display, user_data):
                 u_status = 'ปกติ'
             elif user_record[3] == 'inactive':
                 u_status = 'ปิดใช้งาน'
-            elif user_record[3] == 'lock':
+            elif user_record[3] == 'locked':
                 u_status = 'ถูกระงับ'
 
             # user account full name
@@ -142,6 +142,7 @@ def user_management(display, user_data):
         pass
 
     def add_new_user_account():
+        global add_new_user_account_frame
         add_new_user_account_frame = tk.Frame(main_frame, bg=config.color_default)
         add_new_user_account_frame.place(x=5, y=5, width=1037, height=610)
         style_label = ttk.Style()
@@ -184,6 +185,7 @@ def user_management(display, user_data):
         lastname_TH = tk.Entry(add_new_user_account_frame, font=tkfont.Font(family='FC Lamoon', size=18), textvariable=user_lastname_th)
         lastname_TH.place(x=290, y=350, width=250, height=30)
 
+        global user_residence
         user_residence = tk.Text(add_new_user_account_frame, font=tkfont.Font(family='FC Lamoon', size=18))
         user_residence.place(x=290, y=400, width=250, height=90)
 
@@ -201,16 +203,85 @@ def user_management(display, user_data):
 
 
 
-        cancel_botton = tk.Button(add_new_user_account_frame, bg="#C40000", text="ยกเลิก", font=tkfont.Font(family='FC Lamoon', size=18, weight='bold'), fg="white")
+        cancel_botton = tk.Button(add_new_user_account_frame, bg="#C40000", text="ยกเลิก", font=tkfont.Font(family='FC Lamoon', size=18, weight='bold'), fg="white", command=lambda: cancel_click())
         cancel_botton.place(x=725, y=520, width=110, height=50)
 
-        save_botton = tk.Button(add_new_user_account_frame, bg="#00C400", text="บันทึก", font=tkfont.Font(family='FC Lamoon', size=18, weight='bold'), fg="white")
+        save_botton = tk.Button(add_new_user_account_frame, bg="#00C400", text="บันทึก", font=tkfont.Font(family='FC Lamoon', size=18, weight='bold'), fg="white", command=lambda: save_new_user())
         save_botton.place(x=860, y=520, width=110, height=50)
 
+    def cancel_click():
+        add_new_user_account_frame.destroy()
+        user_rank.set("")
+        user_identification_id.set("")
+        user_name_prefix.set("")
+        user_name_th.set("")
+        user_lastname_th.set("")
+        user_name_en.set("")
+        user_lastname_en.set("")
+        user_date_of_birthday.set("")
+        user_phone_number.set("")
+        show_user_account()
+
+    def save_new_user():
+        import datetime
+        day = datetime.datetime.now().strftime("%d")
+        month = datetime.datetime.now().strftime("%m")
+        year = datetime.datetime.now().strftime("%y")
+        Year = datetime.datetime.now().strftime("%Y")
+        hour = datetime.datetime.now().strftime("%H")
+        minute = datetime.datetime.now().strftime("%M")
+        second = datetime.datetime.now().strftime("%S")
+
+        import sqlite3
+        conn = sqlite3.connect('assets\\backend\\database\\minipos.db')
+        cursor = conn.cursor()
+
+        if user_rank.get() == "ผู้ดูแลระบบ":
+            user_id = str(165010000 + int(user_account_list[len(user_account_list)-1][0][5:9])+1)
+        elif user_rank.get() == "พนักงาน":
+            user_id = str(165020000 + int(user_account_list[len(user_account_list)-1][0][5:9])+1)
+
+        date_create = day + "/" + month + "/" + Year + " " + hour + ":" + minute + ":" + second
+        date_update = date_create
+
+        status = "active"
+
+        if user_name_prefix.get() == "นาย":
+            name_prefix = "mr"
+        elif user_name_prefix.get() == "นาง":
+            name_prefix = "ms"
+        elif user_name_prefix.get() == "นางสาว":
+            name_prefix = "miss"
+
+        name_th = user_name_th.get()
+        lastname_th = user_lastname_th.get()
+        name_en = user_name_en.get()
+        lastname_en = user_lastname_en.get()
+
+        identification_id = user_identification_id.get()
+
+        date_of_birth = user_date_of_birthday.get()
+
+        phone_number = user_phone_number.get()
+
+        residence = user_residence.get("1.0", "end-1c")
+
+        username = name_en.lower()+"."+lastname_en[0:4].lower()
+
+        import password_encrypt
+        password = password_encrypt.password_encrypt(username, phone_number)
+        print(password)
+
+        sql = '''INSERT INTO user_accounts (user_id, user_date_create, user_date_update, user_status, user_gender, user_name_th, user_lastname_th, user_name_en, user_lastname_en, user_identification_id, user_date_of_birth, user_phone_number, user_residence, user_username, user_password)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+
+        cursor.execute(sql, [user_id, date_create, date_update, status, name_prefix, name_th, lastname_th, name_en, lastname_en, identification_id, date_of_birth, phone_number, residence, username, password])
+        conn.commit()
+        conn.close()
 
     create_frame()
-    # show_user_account()
-    add_new_user_account()
+    show_user_account()
+    # add_new_user_account()
     # user_account_tree.bind('<Double-1>', lambda event: show_user_account_detail())
     return user_management_frame
 
