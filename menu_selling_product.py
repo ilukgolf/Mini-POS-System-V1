@@ -369,6 +369,8 @@ def selling_product(display, user_data):
         VALUES (?, ?, ?, ?, ?, ?)'''
         cursor.execute(sql2, (sell_id, sell_date, user_data[0], float(total_price), float(cash_received_var.get()), float(cash_received_var.get()) - float(total_price)))
         conn.commit()
+        sql3= '''UPDATE product_storage SET product_amount = product_amount - ? WHERE product_id = ?'''
+        cursor.execute(sql3, (amount, id))
         conn.close()
         cancel_order()
 
