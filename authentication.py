@@ -69,8 +69,8 @@ def authentication_frame(root):
         global center_frame_top, center_frame_bottom, center_frame_center, center_frame_center_inside, center_frame_bottom
         global username_entry, password_entry, username_input, password_input, login_button, forget_password_label
         username_input, password_input = tk.StringVar(), tk.StringVar()
-        username_input.set("jirawat.bunm")
-        password_input.set("password")
+        # username_input.set("jirawat.bunm")
+        # password_input.set("password")
 
         center_frame['bg'] = config.window_background_color2
 
