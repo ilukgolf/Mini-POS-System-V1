@@ -4,7 +4,7 @@
 
 ***
 
->**7 Functions**
+>**4 Functions**
 1. Selling record system
 2. Searching products system
 3. User account management system
